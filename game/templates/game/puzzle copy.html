@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Picross Diário</title>
+    <link rel="stylesheet" href="{% static 'game/style.css' %}">
+    <style>
+        /* Define --size dinamicamente para o CSS externo usar */
+        :root { --size: {{ size }}; }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Picross de {{ size }}×{{ size }}</h1>
+        <div class="grid" id="grid">
+            {% for row in indices %}
+                {% for col in indices %}
+                    <div class="cell" data-row="{{ row }}" data-col="{{ col }}"></div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+
+        <!-- Mover o botão para dentro do body aqui -->
+        <div class="verificacao">
+            <button onclick="verificar()">Verificar solução</button>
+            <p id="resultado"></p>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.cell').forEach(c => {
+            c.addEventListener('click', () => c.classList.toggle('filled'));
+        });
+
+        function getSoluçaoDoJogador() {
+            const tamanho = {{ size }};
+            const matriz = [];
+
+            for (let i = 0; i < tamanho; i++) {
+                const linha = [];
+                for (let j = 0; j < tamanho; j++) {
+                    const cell = document.querySelector(`.cell[data-row='${i}'][data-col='${j}']`);
+                    linha.push(cell.classList.contains('filled') ? 1 : 0);
+                }
+                matriz.push(linha);
+            }
+
+            return matriz;
+        }
+
+        async function verificar() {
+            const resposta = getSoluçaoDoJogador();
+
+            const res = await fetch("{% url 'check_solution' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: JSON.stringify({ resposta })
+            });
+
+            const data = await res.json();
+            document.getElementById("resultado").innerText = data.correto
+                ? "✅ Você acertou!"
+                : "❌ Ainda não está certo.";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+# Ambiente virtual
+venv/
+env/
+ENV/
+.venv/
+.python-version
+
+# Arquivos de cache do Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Arquivos de log
+*.log
+
+# Banco de dados SQLite (caso esteja usando em dev)
+*.sqlite3
+db.sqlite3
+
+# Configs do Django
+*.pot
+*.pyc
+
+# Arquivos de migração gerados automaticamente
+*/migrations/__pycache__/
+*/migrations/*.pyc
+*/migrations/*.pyo
+*/migrations/*.pyd
+*/migrations/*.log
+*/migrations/*.sql
+*/migrations/*.sqlite3
+*/migrations/*.py
+
+# Node (caso use alguma ferramenta frontend)
+node_modules/
+
+# Compilados de Sass/CSS, se aplicável
+*.sass-cache
+
+# Arquivos estáticos coletados (caso use collectstatic)
+staticfiles/
+static/
+
+# Media (uploads, imagens de usuários)
+media/
+
+# Arquivos temporários do sistema
+*.swp
+*.swo
+*.DS_Store
+Thumbs.db
+
+# Configurações de IDEs/editores
+.vscode/
+.idea/
+
+# Arquivos de exportação
+*.bak
+*.tmp
+*.orig
+
+# Arquivos do sistema
+desktop.ini

@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>Picross Diário</title>
+    <link rel="stylesheet" href="{% static 'game/style.css' %}">
+    <style>
+        /* Define --size dinamicamente para o CSS externo usar */
+        :root { --size: {{ size }}; }
+    </style>
+</head>
+<body>
+    <div>
+        <h1 class='site-title'>Picross de {{ size }} × {{ size }}</h1>
+
+        <table class="picross-grid">
+            <thead>
+                <tr>
+                    <th class="blank-cell-corner"></th>  <!-- canto superior esquerdo vazio -->
+                    {% for hint in col_hints %}
+                        <th class='celula-cima'>
+                            {% for num in hint %}
+                                <div class='coluna-dica'>{{ num }}</div>
+                            {% endfor %}
+                        </th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for i, dica in rows_with_hints %}
+                <tr>
+                    <th class='celula-lado'>
+                        <div>
+                            {% for num in dica %}
+                            <div class="linha-dica">{{ num }}</div>
+                            {% endfor %}
+                        </div>
+                    </th>
+                    {% for j in indices %}
+                    <td>
+                        <div class="cell" data-row="{{ i }}" data-col="{{ j }}"></div>
+                    </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="verificacao">
+            <button onclick="verificar()">Verificar solução</button>
+            <p id="resultado"></p>
+        </div>
+    </div>
+
+<script>
+    const tamanho = {{ size }};
+    const urlVerificar = "{% url 'check_solution' %}";
+</script>
+<script src="{% static 'game/script.js' %}"></script>
+
+</body>
+</html>
