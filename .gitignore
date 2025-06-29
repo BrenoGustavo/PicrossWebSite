@@ -37,9 +37,9 @@ node_modules/
 # Compilados de Sass/CSS, se aplicável
 *.sass-cache
 
-# Arquivos estáticos coletados (caso use collectstatic)
-staticfiles/
-static/
+# # Arquivos estáticos coletados (caso use collectstatic)
+# staticfiles/
+# static/
 
 # Media (uploads, imagens de usuários)
 media/

@@ -13,8 +13,25 @@
 </head>
 <body>
     <div>
-        <h1 class='site-title'>Picross de {{ size }} × {{ size }}</h1>
+       <div class="menu-selecao">
+            <a href="{% url 'daily_puzzle' %}" class="menu-botao {% if modo == 'daily' %}ativo{% endif %}">
+                Desafio Diário
+            </a>
+            <a href="{% url 'random_challenge' %}" class="menu-botao {% if modo == 'random' %}ativo{% endif %}">
+                Desafio Aleatório
+            </a>
+        </div>
 
+
+        <h1 class='site-title'> {{ size }} × {{ size }}</h1>
+
+
+        {% if modo == 'daily' %}
+        <h2>Daily Challenge</h2>
+        {% elif modo == 'random' %}
+        <h2>Random Challenge</h2>
+        {% endif %}
+        
         <table class="picross-grid">
             <thead>
                 <tr>
@@ -40,7 +57,7 @@
                     </th>
                     {% for j in indices %}
                     <td>
-                        <div class="cell" data-row="{{ i }}" data-col="{{ j }}"></div>
+                        <div class="cell" data-row="{{ i|add:0  }}" data-col="{{ j|add:0  }}"></div>
                     </td>
                     {% endfor %}
                 </tr>
