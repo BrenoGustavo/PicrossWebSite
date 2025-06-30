@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = await res.json();
         console.log("Resposta que será enviada:", resposta);
         document.getElementById("resultado").innerText = data.correto
-            ? "✅ Você acertou!"
-            : "❌ Ainda não está certo.";
+            ? "✅ Correct!"
+            : "❌ Incorrect";
     };
 });

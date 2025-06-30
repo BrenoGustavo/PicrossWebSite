@@ -1,9 +1,12 @@
 body {
-    font-family: sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fafafa;
+    margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
-    padding-top: 50px;
 }
+
 
 .grid {
     display: grid;
@@ -12,15 +15,13 @@ body {
     gap: 2px;
 }
 
+
 .cell {
-    width:40px;
-    height: 40px;
-    /* border: 1px solid #ccc; */
-    border: 0;
+    width: 100%;
+    height: 100%;
     background-color: white;
     cursor: pointer;
-    user-select: none;
-    -webkit-user-drag: none;
+
 }
 
 .cell.filled {
@@ -44,8 +45,8 @@ body {
 }
 
 .picross-grid th, .picross-grid td {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     text-align: center;
     vertical-align: middle;
     padding: 0;
@@ -54,17 +55,10 @@ body {
 
 .picross-grid th {
     font-weight: normal;
-    font-size: 12px;
+    /* font-size: 12px; */
     background-color: #f0f0f0;
 }
 
-.cell {
-    width: 100%;
-    height: 100%;
-    background-color: white;
-    cursor: pointer;
-
-}
 
 h1.site-title {
     text-align: center;
@@ -75,14 +69,14 @@ h1.site-title {
 
 
 .linha-dica {
-    font-size: 14px;
+    font-size: 16px;
     display: inline-block;
     margin-right: 4px;
 }
 
 .coluna-dica {
     margin-bottom: 4px;
-    font-size: 14px;
+    font-size: 16px;
     border-top: 0;
 }
 
@@ -145,34 +139,78 @@ h1.site-title {
     background-color: rgba(162, 162, 162, 0.8)
 }
 
-
-/*   -------------------------   */
-
 .menu-selecao {
     text-align: center;
     margin-bottom: 40px;
 }
 
 .menu-botao {
-    padding: 10px 20px;
+    display: inline-block;
+    padding: 12px 24px;
     margin: 0 10px;
     text-decoration: none;
-    color: black;
-    border: 2px solid #000;
-    border-radius: 10px;
-    background-color: #f0f0f0;
-    font-weight: bold;
+    color: #333;
+    background: linear-gradient(to right, #e0e0e0, #f8f8f8);
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .menu-botao:hover {
-    background-color: #ddd;
+    background: linear-gradient(to right, #d4edda, #c3e6cb);
+    color: #2d572c;
+    border-color: #4CAF50;
 }
 
 .menu-botao.ativo {
-    background-color: #4CAF50;
+    background: #4CAF50;
     color: white;
     border-color: #4CAF50;
+    box-shadow: 0 4px 8px rgba(0, 128, 0, 0.2);
 }
 h2 {
     text-align: center;
+}
+
+
+.container {
+    width: min(95%, 800px);
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+}
+
+.site-title {
+    font-size: 2.2rem;
+    text-align: center;
+    margin-top: 0;
+}
+
+.modo-indicador {
+    text-align: center;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.verificacao button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 16px;
+    transition: background-color 0.2s;
+}
+
+.verificacao button:hover {
+    background-color: #45a049;
+}
+
+.verificacao p {
+    font-weight: bold;
+    margin-top: 12px;
 }

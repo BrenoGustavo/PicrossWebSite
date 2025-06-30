@@ -4,78 +4,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token }}">
-    <title>Picross Diário</title>
+    <title>Picross</title>
     <link rel="stylesheet" href="{% static 'game/style.css' %}">
-    <style>
-        /* Define --size dinamicamente para o CSS externo usar */
-        :root { --size: {{ size }}; }
-    </style>
+    <style>:root { --size: {{ size }}; }</style>
 </head>
 <body>
-    <div>
-       <div class="menu-selecao">
-            <a href="{% url 'daily_puzzle' %}" class="menu-botao {% if modo == 'daily' %}ativo{% endif %}">
-                Desafio Diário
-            </a>
-            <a href="{% url 'random_challenge' %}" class="menu-botao {% if modo == 'random' %}ativo{% endif %}">
-                Desafio Aleatório
-            </a>
-        </div>
+    <div class="container">
+        <header>
+            <h1 class="site-title">{{ size }} × {{ size }}</h1>
+            <div class="menu-selecao">
+                <a href="{% url 'daily_puzzle' %}" class="menu-botao {% if modo == 'daily' %}ativo{% endif %}">Daily Challenge</a>
+                <a href="{% url 'random_challenge' %}" class="menu-botao {% if modo == 'random' %}ativo{% endif %}">Random Challenge</a>
+            </div>
+            <h2 class="modo-indicador">
+                {% if modo == 'daily' %}Daily Nonogram{% elif modo == 'random' %}Randomized Challenge{% endif %}
+            </h2>
+        </header>
 
-
-        <h1 class='site-title'> {{ size }} × {{ size }}</h1>
-
-
-        {% if modo == 'daily' %}
-        <h2>Daily Challenge</h2>
-        {% elif modo == 'random' %}
-        <h2>Random Challenge</h2>
-        {% endif %}
-        
-        <table class="picross-grid">
-            <thead>
-                <tr>
-                    <th class="blank-cell-corner"></th>  <!-- canto superior esquerdo vazio -->
-                    {% for hint in col_hints %}
-                        <th class='celula-cima'>
-                            {% for num in hint %}
-                                <div class='coluna-dica'>{{ num }}</div>
-                            {% endfor %}
+        <main>
+            <table class="picross-grid">
+                <thead>
+                    <tr>
+                        <th class="blank-cell-corner"></th>
+                        {% for hint in col_hints %}
+                            <th class="celula-cima">
+                                {% for num in hint %}<div class="coluna-dica">{{ num }}</div>{% endfor %}
+                            </th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i, dica in rows_with_hints %}
+                    <tr>
+                        <th class="celula-lado">
+                            <div>{% for num in dica %}<div class="linha-dica">{{ num }}</div>{% endfor %}</div>
                         </th>
+                        {% for j in indices %}
+                        <td><div class="cell" data-row="{{ i }}" data-col="{{ j }}"></div></td>
+                        {% endfor %}
+                    </tr>
                     {% endfor %}
-                </tr>
-            </thead>
-            <tbody>
-                {% for i, dica in rows_with_hints %}
-                <tr>
-                    <th class='celula-lado'>
-                        <div>
-                            {% for num in dica %}
-                            <div class="linha-dica">{{ num }}</div>
-                            {% endfor %}
-                        </div>
-                    </th>
-                    {% for j in indices %}
-                    <td>
-                        <div class="cell" data-row="{{ i|add:0  }}" data-col="{{ j|add:0  }}"></div>
-                    </td>
-                    {% endfor %}
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </tbody>
+            </table>
 
-        <div class="verificacao">
-            <button onclick="verificar()">Verificar solução</button>
-            <p id="resultado"></p>
-        </div>
+            <div class="verificacao">
+                <button onclick="verificar()">Verificar solução</button>
+                <p id="resultado"></p>
+            </div>
+        </main>
     </div>
 
-<script>
-    const tamanho = {{ size }};
-    const urlVerificar = "{% url 'check_solution' %}";
-</script>
-<script src="{% static 'game/script.js' %}"></script>
-
+    <script>
+        const tamanho = {{ size }};
+        const urlVerificar = "{% url url_verificacao %}";
+    </script>
+    <script src="{% static 'game/script.js' %}"></script>
 </body>
 </html>

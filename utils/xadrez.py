@@ -20,13 +20,13 @@ def criar_matriz_xadrez(linhas, colunas):
     return matriz
 
 # Exemplo de uso:
-linhas = 5
-colunas = 5
+linhas = 15
+colunas = 15
 matriz_xadrez = criar_matriz_xadrez(linhas, colunas)
 
 # Imprimindo a matriz
 print(matriz_xadrez)
 
 
-b = [[0 for i in range(10)] for i in range(10)]
-print(b)
+# b = [[0 for i in range(10)] for i in range(10)]
+# print(b)

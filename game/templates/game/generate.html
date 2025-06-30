@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerador de Grid</title>
+    <link rel="stylesheet" href="{% static 'game/style.css' %}">
+    <style>:root { --size: {{ size }}; }</style>
+</head>
+<body>
+    <div class="menu-selecao">
+        <form method="get" action="{% url 'generate_grid' %}">
+            <label>Tamanho: </label>
+            <input type="number" name="size" value="{{ size }}" min="2" max="20">
+            <button type="submit">Gerar</button>
+        </form>
+    </div>
+
+    <h1 class="site-title">Criar Desenho {{ size }} × {{ size }}</h1>
+
+    <table class="picross-grid">
+        <tbody>
+            {% for i in indices %}
+            <tr>
+                {% for j in indices %}
+                <td><div class="cell" data-row="{{ i }}" data-col="{{ j }}"></div></td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="verificacao">
+        <button onclick="exportarGrid()">Exportar como lista Python</button>
+        <textarea id="saida" rows="10" cols="40" readonly></textarea>
+    </div>
+
+    <script>
+        const tamanho = {{ size }};
+        function getGrid() {
+            const matriz = [];
+            for (let i = 0; i < tamanho; i++) {
+                const linha = [];
+                for (let j = 0; j < tamanho; j++) {
+                    const cell = document.querySelector(`.cell[data-row='${i}'][data-col='${j}']`);
+                    linha.push(cell.classList.contains('filled') ? 1 : 0);
+                }
+                matriz.push(linha);
+            }
+            return matriz;
+        }
+
+        function exportarGrid() {
+            const matriz = getGrid();
+            document.getElementById('saida').value = JSON.stringify(matriz);
+        }
+    </script>
+    <script src="{% static 'game/script.js' %}"></script>
+</body>
+</html>
